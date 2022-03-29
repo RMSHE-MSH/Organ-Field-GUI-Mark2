@@ -22,8 +22,9 @@ void Window::MoveWindow(int X, int Y) { ::MoveWindow(Handle, X, Y, GetWidth(), G
 //获取相对于屏幕的鼠标坐标;
 void Window::GetScreenMouse() { GetCursorPos(&Mouse_Screen); }
 //获取相对于窗口的鼠标消息;
-ExMessage Window::GetWindowMouse() { return getmessage(EM_MOUSE); }
-
+ExMessage Window::GetWindowMouse() {
+	return getmessage(EM_MOUSE);
+}
 ExMessage Window::PeekWindowMouse() {
 	ExMessage Mouse_Window{ NULL };
 	peekmessage(&Mouse_Window);
