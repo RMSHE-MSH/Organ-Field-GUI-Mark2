@@ -3,19 +3,23 @@ Window Win_m;
 
 void OFButton::CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, void ClickEvent()) {
 	int rec[] = { x, y ,x + width ,y + height };//转换为矩形;
-	SetButtonTextStyle(height / 2, FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
+	SetButtonTextStyle(height / 2.5, FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
 
-	short Event = ButtonDetec(rec, Win_m.GetWindowMouse());//检测按钮状态;
+	short Event = ButtonDetec(rec, Win_m.PeekWindowMouse());//检测按钮状态;
 
 	if (SetState != disable && SetState != loading) {
+		BeginBatchDraw();
 		ButtonRender(rec, Event, NULL);
 		DrawButtonText(ButtonName.c_str(), RGB(0, 0, 0), rec);
+		EndBatchDraw();
+
+		if (Event == click) { while (1) { if (!KEY_DOWN(VK_LBUTTON))break; }ClickEvent(); }//如果按钮被点击后并且被释放则执行事件;
 	} else {
+		BeginBatchDraw();
 		ButtonRender(rec, SetState, NULL);
 		DrawButtonText(ButtonName.c_str(), RGB(131, 131, 131), rec);
+		EndBatchDraw();
 	}
-
-	if (Event == click) { while (1) { if (!KEY_DOWN(VK_LBUTTON))break; }ClickEvent(); }//如果按钮被点击后并且被释放则执行事件;
 }
 
 void OFButton::SetNormalStyle(short buttonrim, COLORREF rimcolor, short fillstyle, short fillhatch, COLORREF fillcolor, COLORREF textcolor) {
