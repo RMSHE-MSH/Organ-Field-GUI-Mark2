@@ -3,7 +3,7 @@ Window Win_m;
 
 void OFButton::CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, void ClickEvent()) {
 	int rec[] = { x, y ,x + width ,y + height };//转换为矩形;
-	SetButtonTextStyle(height / 2.5, FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
+	SetButtonTextStyle(LONG(height / 2.5), FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
 
 	short Event = ButtonDetec(rec, Win_m.PeekWindowMouse());//检测按钮状态;
 
@@ -13,7 +13,9 @@ void OFButton::CreateButton(string ButtonName, int x, int y, int width, int heig
 		DrawButtonText(ButtonName.c_str(), RGB(0, 0, 0), rec);
 		EndBatchDraw();
 
-		if (Event == click) { while (1) { if (!KEY_DOWN(VK_LBUTTON))break; }ClickEvent(); }//如果按钮被点击后并且被释放则执行事件;
+		//如果按钮被点击后并且被释放则执行事件;
+		//如果按钮被点击,设置初始值取消点击操作为否,如果右键单击并且鼠标移出按钮边框范围则取消按钮点击,如果左键松开则执行事件;
+		if (Event == click) { bool Cancel = 0; while (1) { if (KEY_DOWN(VK_RBUTTON)) { Cancel = 1; break; }; if (!KEY_DOWN(VK_LBUTTON))break; }; if (Cancel == 0)ClickEvent(); }
 	} else {
 		BeginBatchDraw();
 		ButtonRender(rec, SetState, NULL);
