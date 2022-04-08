@@ -1,5 +1,6 @@
 #pragma once
 #include "Universal.h"
+
 class Window {
 private:
 	HWND hWnd;                      //窗口句柄;
@@ -29,6 +30,8 @@ public:
 	void MoveWindow(int X, int Y);
 	//设置窗口样式(窗口背景颜色,窗口绘图缩放因子);
 	void SetWindowStyle(COLORREF backdrop_color, float xasp, float yasp);
+
+	//新的集成鼠标键盘窗口消息调度中心已经在OFMessage中,将逐渐弃用Windows类的同类函数;
 
 	//获取相对于屏幕的鼠标坐标;
 	void GetScreenMouse();
