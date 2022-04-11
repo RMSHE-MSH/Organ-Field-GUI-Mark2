@@ -30,6 +30,9 @@
     <ClInclude Include="OFMessage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OFSlider.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OFMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OFSlider.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

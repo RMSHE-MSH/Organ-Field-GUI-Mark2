@@ -25,10 +25,8 @@ private:
 	//检测按钮对鼠标活动的状态(按钮矩形,鼠标坐标);
 	short ButtonDetec(int *DiagonalPoints, ExMessage Mouse_Window);
 public:
-	//创建一个无返回值的按钮(按钮名称,按钮坐标,按钮宽,按钮长,设置按钮状态,点击事件);
-	void CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, void ClickEvent());
 	//创建一个int类型返回值的按钮(按钮名称,按钮坐标,按钮宽,按钮长,设置按钮状态,点击事件);
-	int CreateRintButton(string ButtonName, int x, int y, int width, int height, short SetState, int ClickEvent());
+	int CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, int (*EventFunc)());
 public:
 	//设置各按钮状态的样式(按钮边框线粗细,边框线颜色,指定填充样式,指定填充图案,指定填充颜色,指定按钮字体颜色);
 	void SetNormalStyle(short buttonrim, COLORREF rimcolor, short fillstyle, short fillhatch, COLORREF fillcolor, COLORREF textcolor);

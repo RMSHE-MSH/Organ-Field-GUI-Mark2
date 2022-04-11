@@ -6,8 +6,11 @@
 
 class OFMessage {
 private:
-	void PeekWindowMouse_Tree();
+	//获取相对于窗口的鼠标消息的循环进程;
+	void PeekOFMessage_Tree();
 public:
-	void PeekWindowMouse();
-	ExMessage GetMouseMessage();
+	//开启获取相对于窗口的鼠标消息循环函数线程;
+	void PeekOFMessageUP();
+	//立即返回相对于窗口的鼠标消息;
+	ExMessage PeekOFMessage();
 };

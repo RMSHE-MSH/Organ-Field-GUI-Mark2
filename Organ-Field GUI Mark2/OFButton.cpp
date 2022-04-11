@@ -68,11 +68,11 @@ short OFButton::ButtonDetec(int *DiagonalPoints, ExMessage Mouse_Window) {
 	return normal;
 }
 
-void OFButton::CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, void ClickEvent()) {
+int OFButton::CreateButton(string ButtonName, int x, int y, int width, int height, short SetState, int (*EventFunc)()) {
 	int rec[] = { x, y ,x + width ,y + height };//转换为矩形;
 	SetButtonTextStyle(LONG(height / 2.5), FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
 
-	short Event = ButtonDetec(rec, OFM_OFB.GetMouseMessage());//检测按钮状态;
+	short Event = ButtonDetec(rec, OFM_OFB.PeekOFMessage());//检测按钮状态;
 
 	if (SetState != disable && SetState != loading) {
 		BeginBatchDraw();
@@ -82,37 +82,13 @@ void OFButton::CreateButton(string ButtonName, int x, int y, int width, int heig
 
 		//如果按钮被点击后并且被释放则执行事件;
 		//如果按钮被点击,设置初始值取消点击操作为否,如果右键单击并且鼠标移出按钮边框范围则取消按钮点击,如果左键松开则执行事件;
-		if (Event == click) { bool Cancel = 0; while (1) { if (KEY_DOWN(VK_RBUTTON)) { Cancel = 1; break; }; if (!KEY_DOWN(VK_LBUTTON))break; }; if (Cancel == 0)ClickEvent(); }
+		if (Event == click) { bool Cancel = 0; while (1) { if (KEY_DOWN(VK_RBUTTON)) { Cancel = 1; break; }; if (!KEY_DOWN(VK_LBUTTON))break; }; if (Cancel == 0)return EventFunc(); }
 	} else {
 		BeginBatchDraw();
 		ButtonRender(rec, SetState, NULL);
 		DrawButtonText(ButtonName.c_str(), RGB(131, 131, 131), rec);
 		EndBatchDraw();
 	}
-}
-
-int OFButton::CreateRintButton(string ButtonName, int x, int y, int width, int height, short SetState, int ClickEvent()) {
-	int rec[] = { x, y ,x + width ,y + height };//转换为矩形;
-	SetButtonTextStyle(LONG(height / 2.5), FW_MEDIUM, ButtonTextColor[SetState], "微软雅黑");//设置按钮字体样式;
-
-	short Event = ButtonDetec(rec, OFM_OFB.GetMouseMessage());//检测按钮状态;
-
-	if (SetState != disable && SetState != loading) {
-		BeginBatchDraw();
-		ButtonRender(rec, Event, NULL);
-		DrawButtonText(ButtonName.c_str(), RGB(0, 0, 0), rec);
-		EndBatchDraw();
-
-		//如果按钮被点击后并且被释放则执行事件;
-		//如果按钮被点击,设置初始值取消点击操作为否,如果右键单击并且鼠标移出按钮边框范围则取消按钮点击,如果左键松开则执行事件;
-		if (Event == click) { bool Cancel = 0; while (1) { if (KEY_DOWN(VK_RBUTTON)) { Cancel = 1; break; }; if (!KEY_DOWN(VK_LBUTTON))break; }; if (Cancel == 0)return ClickEvent(); }
-	} else {
-		BeginBatchDraw();
-		ButtonRender(rec, SetState, NULL);
-		DrawButtonText(ButtonName.c_str(), RGB(131, 131, 131), rec);
-		EndBatchDraw();
-	}
-	return NULL;
 }
 
 void OFButton::SetNormalStyle(short buttonrim, COLORREF rimcolor, short fillstyle, short fillhatch, COLORREF fillcolor, COLORREF textcolor) {

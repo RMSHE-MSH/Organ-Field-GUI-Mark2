@@ -6,7 +6,6 @@ private:
 	HWND hWnd;                      //窗口句柄;
 	RECT Rect;                      //窗口边缘矩形;
 	POINT Mouse_Screen;             //储存相对屏幕的鼠标坐标;
-	ExMessage Mouse_Window{ NULL }; //储存相对窗口的鼠标消息;
 public:
 	//获取窗口宽度;
 	static int GetWidth();
@@ -35,10 +34,5 @@ public:
 
 	//获取相对于屏幕的鼠标坐标;
 	void GetScreenMouse();
-	//获取相对于窗口的鼠标消息,如果没有消息则一直等待;
-	ExMessage GetWindowMouse();
-	//获取相对于窗口的鼠标消息,并立即返回;
-	ExMessage PeekWindowMouse();
-
 public:// Windows API;
 };

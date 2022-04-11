@@ -32,7 +32,3 @@ void Window::SetWindowStyle(COLORREF backdrop_color, float xasp, float yasp) {
 
 //获取相对于屏幕的鼠标坐标;
 void Window::GetScreenMouse() { GetCursorPos(&Mouse_Screen); }
-
-//获取相对于窗口的鼠标消息;
-ExMessage Window::GetWindowMouse() { return getmessage(EM_MOUSE); }
-ExMessage Window::PeekWindowMouse() { peekmessage(&Mouse_Window); return Mouse_Window; }

@@ -44,4 +44,8 @@ using namespace std;
 #define hover 2    //鼠标划过;
 #define loading 3  //加载态;
 
+#define runing 4  //运行(表示线程正在运行,没有卡死);
+#define pause 5   //暂停(表示线程暂停);
+#define ended 6   //终止(表示线程已结束)
+
 #endif

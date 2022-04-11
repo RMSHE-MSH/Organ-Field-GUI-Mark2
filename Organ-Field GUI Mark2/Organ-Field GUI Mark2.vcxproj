@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="OFButton.h" />
     <ClInclude Include="OFMessage.h" />
+    <ClInclude Include="OFSlider.h" />
     <ClInclude Include="ToggleSwitch.h" />
     <ClInclude Include="Universal.h" />
     <ClInclude Include="Window.h" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="OFButton.cpp" />
     <ClCompile Include="OFMessage.cpp" />
+    <ClCompile Include="OFSlider.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="ToggleSwitch.cpp" />
     <ClCompile Include="Window.cpp" />

@@ -3,7 +3,7 @@
 Window win_m;
 OFMessage OFM_TS;
 
-void ToggleSwitch::ToggleRender(int *DiagonalPoints, short state) {
+void ToggleSwitch::ToggleRender(int ToggleName, int *DiagonalPoints, short state) {
 	if (state == close) {//关闭状态的开关;
 		setfillstyle(ToggleFillStyle[close], NULL); setfillcolor(ToggleFillColor[close]);
 		setlinestyle(PS_SOLID | PS_ENDCAP_FLAT | PS_JOIN_MITER, ToggleRim[close]); setlinecolor(ToggleRimColor[close]);
@@ -21,6 +21,8 @@ void ToggleSwitch::ToggleRender(int *DiagonalPoints, short state) {
 	} else if (state == hover) {//鼠标划过的开关;
 		setlinestyle(PS_SOLID | PS_ENDCAP_FLAT | PS_JOIN_MITER, ToggleRim[hover]); setlinecolor(ToggleRimColor[hover]);
 		rectangle(DiagonalPoints[0], DiagonalPoints[1], DiagonalPoints[2], DiagonalPoints[3]);
+
+		if (ToggleState[ToggleName] == close) { setfillcolor(SliderColor[hover]); solidrectangle(DiagonalPoints[0] + 2, DiagonalPoints[1] + 2, DiagonalPoints[2] - 30, DiagonalPoints[3] - 2); }
 	} else if (state == loading) {//加载状态的开关;
 		setfillstyle(ToggleFillStyle[loading], NULL); setfillcolor(ToggleFillColor[loading]);
 		setlinestyle(PS_SOLID | PS_ENDCAP_FLAT | PS_JOIN_MITER, ToggleRim[loading]); setlinecolor(ToggleRimColor[loading]);
@@ -34,28 +36,34 @@ short ToggleSwitch::ToggleDetec(int ToggleName, int *DiagonalPoints, ExMessage M
 	if (Mouse_Window.x > DiagonalPoints[0] && Mouse_Window.y > DiagonalPoints[1] && Mouse_Window.x < DiagonalPoints[2] && Mouse_Window.y < DiagonalPoints[3]) {
 		if (KEY_DOWN(VK_LBUTTON)) {//鼠标左键单击;
 			while (1) { if (!KEY_DOWN(VK_LBUTTON))break; }//鼠标左键松开;
-			//反转开关状态,并重新设置状态;
-			if (SliderState[ToggleName] == 0) { SliderState[ToggleName] = 1; return open; } else { SliderState[ToggleName] = 0; return close; }
+			//如果开关可用则反转并重新设置开关状态;
+			if (ToggleState[ToggleName] == close) {
+				ToggleState[ToggleName] = open; return open;
+			} else if (ToggleState[ToggleName] != disable && ToggleState[ToggleName] != loading) {
+				ToggleState[ToggleName] = close; return close;
+			}
 		} else { return hover; }
 	}
 
-	if (SliderState[ToggleName] == 0) { return close; } else { return open; }
+	if (ToggleState[ToggleName] == close) { return close; } else if (ToggleState[ToggleName] == open) { return open; } else { return disable; }
 }
 
-void ToggleSwitch::CreateToggle(int ToggleName, int x, int y, short SetState, void ClickEvent()) {
+int ToggleSwitch::CreateToggle(int ToggleName, int x, int y, short SetInitialState, int (*EventFunc)()) {
+	if (ToggleNum <= ToggleName) { if (ToggleNum == ToggleName) { ToggleState[ToggleNum] = SetInitialState; } ++ToggleNum; }
+
 	int rec[] = { x, y ,x + 44 ,y + 20 };//转换为矩形;
 
-	short Event = ToggleDetec(ToggleName, rec, OFM_TS.GetMouseMessage());//检测按钮状态;
+	short Event = ToggleDetec(ToggleName, rec, OFM_TS.PeekOFMessage());//检测按钮状态;
 
-	if (SetState != disable && SetState != loading) {
+	if (ToggleState[ToggleName] != disable && ToggleState[ToggleName] != loading) {
 		BeginBatchDraw();
-		ToggleRender(rec, Event);
+		ToggleRender(ToggleName, rec, Event);
 		EndBatchDraw();
 
-		if (Event == open) { ClickEvent(); }
+		if (ToggleState[ToggleName] == open) { return EventFunc(); }
 	} else {
 		BeginBatchDraw();
-		ToggleRender(rec, SetState);
+		ToggleRender(ToggleName, rec, ToggleState[ToggleName]);
 		EndBatchDraw();
 	}
 }
@@ -84,13 +92,13 @@ void ToggleSwitch::SetDisableStyle(short Togglerim, COLORREF rimcolor, COLORREF 
 	ToggleFillColor[disable] = getbkcolor();
 	SliderColor[disable] = slidercolor;
 }
-void ToggleSwitch::SetHoverStyle(short Togglerim, COLORREF rimcolor) {
+void ToggleSwitch::SetHoverStyle(short Togglerim, COLORREF MainColor) {
 	ToggleRim[hover] = Togglerim;
-	ToggleRimColor[hover] = rimcolor;
+	ToggleRimColor[hover] = MainColor;
 	ToggleFillStyle[hover] = NULL;
 
 	ToggleFillColor[hover] = NULL;
-	SliderColor[hover] = NULL;
+	SliderColor[hover] = MainColor;
 }
 void ToggleSwitch::SetLoadingStyle(short Togglerim, COLORREF rimcolor, COLORREF slidercolor) {
 	ToggleRim[loading] = Togglerim;
@@ -102,9 +110,13 @@ void ToggleSwitch::SetLoadingStyle(short Togglerim, COLORREF rimcolor, COLORREF 
 }
 
 void ToggleSwitch::ToggleDefaultStyle() {
-	SetCloseStyle(1, RGB(0, 0, 0), RGB(0, 0, 0));
+	SetCloseStyle(1, RGB(51, 51, 51), RGB(51, 51, 51));
 	SetOpenStyle(RGB(10, 89, 247), RGB(241, 243, 245));
 	SetDisableStyle(1, RGB(153, 153, 153), RGB(153, 153, 153));
-	SetHoverStyle(1, RGB(113, 96, 232));
+	SetHoverStyle(1, RGB(0, 0, 0));
 	SetLoadingStyle(1, RGB(10, 89, 247), RGB(10, 89, 247));
 }
+
+short ToggleSwitch::GetToggleState(int ToggleName) { return ToggleState[ToggleName]; }
+
+void ToggleSwitch::SetToggleState(int ToggleName, short SetState) { ToggleState[ToggleName] = SetState; }

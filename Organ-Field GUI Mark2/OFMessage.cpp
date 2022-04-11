@@ -1,8 +1,8 @@
 #include "OFMessage.h"
 
-ExMessage MouseMessage{ NULL }; //储存相对窗口的鼠标消息;
-void OFMessage::PeekWindowMouse_Tree() { while (true)peekmessage(&MouseMessage, EM_MOUSE); }
+ExMessage Message{ NULL }; //储存相对窗口的鼠标消息;
+void OFMessage::PeekOFMessage_Tree() { while (true) { Message = getmessage(EM_MOUSE | EM_KEY | EM_CHAR | EM_WINDOW); } }
 
-void OFMessage::PeekWindowMouse() { thread OFMT0(&OFMessage::PeekWindowMouse_Tree, this); OFMT0.detach(); }
+void OFMessage::PeekOFMessageUP() { thread OFMT0(&OFMessage::PeekOFMessage_Tree, this); OFMT0.detach(); }
 
-ExMessage OFMessage::GetMouseMessage() { return MouseMessage; }
+ExMessage OFMessage::PeekOFMessage() { return Message; }
