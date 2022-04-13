@@ -28,6 +28,10 @@ private:
 
 	//鼠标拖动滑动条(滑动条名称,滑动条矩形,鼠标坐标);
 	void SliderDrag(int SliderName, int *DiagonalPoints, ExMessage Mouse_Window);
+	//打印滑条进度文字(指定字符串,指定字符串矩形);
+	void DrawSliderText(int SliderName, LPCTSTR str, int *DiagonalPoints);
+	//设置字体样式(字高,字重,字体颜色,字体);
+	void SetSliderTextStyle(LONG height, LONG weight, COLORREF textcolor, LPCTSTR font);
 public:
 	//设置滑动条或进度条进度(指定滑动条名称,进度0~100);
 	void SetSliderLocation(int SliderName, float LocationValue);
@@ -35,18 +39,14 @@ public:
 	float CreateSlider(int SliderName, int x, int y, int width, int height, short SetState);
 	//获取滑动条或进度条当前进度(指定滑动条或进度条名称);
 	float PeekSliderLocation(int SliderName);
-	//打印滑条进度文字(指定字符串,指定字符串矩形);
-	void DrawSliderText(int SliderName, LPCTSTR str, int *DiagonalPoints);
-	//设置字体样式(字高,字重,字体颜色,字体);
-	void SetSliderTextStyle(LONG height, LONG weight, COLORREF textcolor, LPCTSTR font);
 public:
-	//设置正常状态的样式(边框线粗细,边框线颜色,滑条填充颜色);
+	//设置正常状态的样式(边框线粗细,边框线颜色,滑条填充颜色,进度字体颜色);
 	void SetNormalStyle(COLORREF rimcolor, COLORREF fillcolor, COLORREF bkcolor, COLORREF TextColor);
-	//设置禁用状态的样式(边框线粗细,边框线颜色,滑条填充颜色);
+	//设置禁用状态的样式(边框线粗细,边框线颜色,滑条填充颜色,进度字体颜色);
 	void SetDisableStyle(COLORREF rimcolor, COLORREF fillcolor, COLORREF bkcolor, COLORREF TextColor);
-	//设置鼠标划过状态的样式(边框线粗细,边框线颜色,滑条填充颜色);
+	//设置鼠标划过状态的样式(边框线粗细,边框线颜色,滑条填充颜色,进度字体颜色);
 	void SetHoverStyle(COLORREF rimcolor, COLORREF fillcolor, COLORREF bkcolor, COLORREF TextColor);
-	//设置鼠标拖动状态的样式(边框线粗细,边框线颜色,滑条填充颜色);
+	//设置鼠标拖动状态的样式(边框线粗细,边框线颜色,滑条填充颜色,进度字体颜色);
 	void SetDragStyle(COLORREF rimcolor, COLORREF fillcolor, COLORREF bkcolor, COLORREF TextColor);
 
 	//滑动条样式默认快速设置;

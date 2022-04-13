@@ -42,6 +42,6 @@ public:
 
 	//获取开关当前状态;
 	short GetToggleState(int ToggleName);
-	//设置指定开关的状态;
+	//设置开关的状态;
 	void SetToggleState(int ToggleName, short SetState);
 };

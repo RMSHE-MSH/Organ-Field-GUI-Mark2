@@ -4,13 +4,15 @@
 #include "ToggleSwitch.h"
 #include "OFMessage.h"
 #include "OFSlider.h"
+#include "OFTools.h"
 Window win;
 OFButton OFB;
 ToggleSwitch TS;
 OFMessage OFM;
 OFSlider OFS;
+OFTaskManager OFTM;
 
-int ClickEvent() { cout << "ButtonClick" << endl; return 0; }
+int ClickEvent() { OFTM.ProcessTraversal(); return 0; }
 int ClickEvent_CLS() { system("cls"); return 0; }
 
 float i = 0;

@@ -142,6 +142,7 @@
     <ClInclude Include="OFButton.h" />
     <ClInclude Include="OFMessage.h" />
     <ClInclude Include="OFSlider.h" />
+    <ClInclude Include="OFTools.h" />
     <ClInclude Include="ToggleSwitch.h" />
     <ClInclude Include="Universal.h" />
     <ClInclude Include="Window.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="OFButton.cpp" />
     <ClCompile Include="OFMessage.cpp" />
     <ClCompile Include="OFSlider.cpp" />
+    <ClCompile Include="OFTools.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="ToggleSwitch.cpp" />
     <ClCompile Include="Window.cpp" />
