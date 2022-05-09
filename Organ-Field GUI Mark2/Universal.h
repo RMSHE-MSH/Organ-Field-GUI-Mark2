@@ -48,4 +48,6 @@ using namespace std;
 #define pause 5   //暂停(表示线程暂停);
 #define ended 6   //终止(表示线程已结束)
 
+#define PI 3.1415926535897932384626433
+
 #endif

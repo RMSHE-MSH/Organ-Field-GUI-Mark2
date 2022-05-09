@@ -7,6 +7,7 @@ void ToggleSwitch::ToggleRender(int ToggleName, int *DiagonalPoints, short state
 	if (state == close) {//关闭状态的开关;
 		setfillstyle(ToggleFillStyle[close], NULL); setfillcolor(ToggleFillColor[close]);
 		setlinestyle(PS_SOLID | PS_ENDCAP_FLAT | PS_JOIN_MITER, ToggleRim[close]); setlinecolor(ToggleRimColor[close]);
+		//rectangle(DiagonalPoints[0], DiagonalPoints[1], DiagonalPoints[2], DiagonalPoints[3]);
 		fillrectangle(DiagonalPoints[0], DiagonalPoints[1], DiagonalPoints[2], DiagonalPoints[3]);
 		setfillcolor(SliderColor[close]); solidrectangle(DiagonalPoints[0] + 2, DiagonalPoints[1] + 2, DiagonalPoints[2] - 30, DiagonalPoints[3] - 2);
 	} else if (state == open) {//打开状态的开关;
@@ -56,15 +57,15 @@ int ToggleSwitch::CreateToggle(int ToggleName, int x, int y, short SetInitialSta
 	short Event = ToggleDetec(ToggleName, rec, OFM_TS.PeekOFMessage());//检测按钮状态;
 
 	if (ToggleState[ToggleName] != disable && ToggleState[ToggleName] != loading) {
-		BeginBatchDraw();
+		//BeginBatchDraw();
 		ToggleRender(ToggleName, rec, Event);
-		EndBatchDraw();
+		//EndBatchDraw();
 
 		if (ToggleState[ToggleName] == open) { return EventFunc(); }
 	} else {
-		BeginBatchDraw();
+		//BeginBatchDraw();
 		ToggleRender(ToggleName, rec, ToggleState[ToggleName]);
-		EndBatchDraw();
+		//EndBatchDraw();
 	}
 }
 
@@ -111,10 +112,10 @@ void ToggleSwitch::SetLoadingStyle(short Togglerim, COLORREF rimcolor, COLORREF 
 
 void ToggleSwitch::ToggleDefaultStyle() {
 	SetCloseStyle(1, RGB(51, 51, 51), RGB(51, 51, 51));
-	SetOpenStyle(RGB(10, 89, 247), RGB(241, 243, 245));
+	SetOpenStyle(RGB(0, 47, 167), RGB(241, 243, 245));
 	SetDisableStyle(1, RGB(153, 153, 153), RGB(153, 153, 153));
 	SetHoverStyle(1, RGB(0, 0, 0));
-	SetLoadingStyle(1, RGB(10, 89, 247), RGB(10, 89, 247));
+	SetLoadingStyle(1, RGB(0, 47, 167), RGB(0, 47, 167));
 }
 
 short ToggleSwitch::GetToggleState(int ToggleName) { return ToggleState[ToggleName]; }

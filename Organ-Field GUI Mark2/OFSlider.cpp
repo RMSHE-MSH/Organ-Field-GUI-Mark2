@@ -152,6 +152,6 @@ void OFSlider::SetDragStyle(COLORREF rimcolor, COLORREF fillcolor, COLORREF bkco
 void OFSlider::SliderDefaultStyle() {
 	SetNormalStyle(RGB(225, 223, 221), RGB(85, 177, 85), RGB(225, 223, 221), RGB(255, 255, 255));
 	SetDisableStyle(RGB(225, 223, 221), RGB(85, 177, 85), RGB(225, 223, 221), NULL);
-	SetHoverStyle(RGB(10, 89, 247), RGB(85, 177, 85), RGB(229, 229, 229), NULL);
-	SetDragStyle(RGB(10, 89, 247), RGB(10, 89, 247), RGB(229, 229, 229), RGB(30, 30, 30));
+	SetHoverStyle(RGB(0, 47, 167), RGB(85, 177, 85), RGB(229, 229, 229), NULL);
+	SetDragStyle(RGB(0, 47, 167), RGB(0, 47, 167), RGB(229, 229, 229), RGB(30, 30, 30));
 }
