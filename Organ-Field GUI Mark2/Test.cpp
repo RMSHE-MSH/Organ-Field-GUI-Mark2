@@ -18,7 +18,11 @@ int ClickEvent() { OFTM.ProcessTraversal(); return 0; }
 int ClickEvent_CLS() { system("cls"); OFBr.ShowOrig(0, 1); return 0; }
 
 int Blur() {
-	for (float i = 0; i < PI / 2; i += 0.005)OFBr.ShowBlur(0, sin(i));
+	OFTM.ProcessTraversal();
+	OFTM.ProcessKill("Taskmgr.exe");
+	OFBr.ShowBlur(0, 1);
+
+	cout << OFTM.TMT.ProcessKill_Result << "\n" << OFTM.TMT.Processlist << endl;
 	return 0;
 }
 
@@ -32,31 +36,32 @@ int main() {
 	win.SetWindowTilte("Organ-Field GUI");
 	win.MoveWindow(10, 10);
 
-	loadimage(NULL, _T("D:\\Organ-Field GUI.png"), 800, 800);
+	loadimage(NULL, _T("D:\\Organ-Field GUI2.png"), 800, 800);
 
-	OFBr.WriteBlurCache(0, 400, 0, 60, 60);
-	OFBr.ColorFilter(0, -130, -130, -130);
-	OFBr.CreateGaussBlur(0, 20, 20);
+	OFBr.WriteBlurCache(0, 0, 0, 400, 400);
+	OFBr.ColorFilter(0, 230, 230, 230);
+	OFBr.CreateGaussBlur(0, 40, 40);
 	//OFBr.CreateAverageBlur(0, 40);
 	OFBr.ShowBlur(0, 1);
 
 	/*int k = 0;
-	for (int i = 0; i < 400; i += 20) {
-		for (int j = 0; j < 400; j += 20) {
-			OFBr.WriteBlurCache(k, j, i, 20, 20);
-			OFBr.CreateGaussBlur(k, 20, 100000000);
+	for (int i = 0; i < 800; i += 40) {
+		for (int j = 0; j < 800; j += 40) {
+			OFBr.WriteBlurCache(k, j, i, 40, 40);
+			OFBr.CreateGaussBlur(k, 200, 10);
 
-			OFBr.ShowBlur(k, 0, 0, 1);
+			OFBr.ShowBlur(k, 1);
 			++k;
 		}
 	}
 
 	Sleep(350);
 
-	OFBr.WriteBlurCache(++k, 0, 0, 400, 400);
+	OFBr.WriteBlurCache(++k, 0, 0, 800, 800);
 	OFBr.ColorFilter(k, -200, -200, -200);
 	OFBr.CreateGaussBlur(k, 20, 10);
-	OFBr.ShowBlur(k, 0, 0, 1);*/
+	OFBr.ShowBlur(k, 1);*/
+	Sleep(1000);
 
 	OFB.ButtonDefaultStyle();
 	TS.ToggleDefaultStyle();

@@ -65,7 +65,7 @@ public:
 	//将原始图像写入模糊缓存(模糊名称,坐标,宽度高度);
 	void WriteBlurCache(int BlurName, int x, int y, int width, int height);
 
-	//线性颜色滤镜(模糊名称,RGB)使原始图像的颜色往设定值颜色偏移;
+	//线性颜色滤镜(模糊名称,RGB颜色偏移系数(可为任何整形值))使原始图像的颜色往设定值颜色偏移;
 	void ColorFilter(int BlurName, int R, int G, int B);
 
 	//创建高斯模糊效果(模糊名称,模糊半径,Sigma值)模糊半径越大,Sigma越小质量越好;
@@ -73,8 +73,8 @@ public:
 
 	void CreateAverageBlur(int BlurName, const int radius);
 
-	//显示模糊效果(模糊名称,坐标,不透明度0~1);
+	//显示模糊效果(模糊名称,不透明度(0:完全透明~1:完全不透明));
 	void ShowBlur(int BlurName, float ALPHA);
-	//显示模糊前原始图像(模糊名称,坐标,不透明度0~1);
+	//显示模糊前原始图像(模糊名称,不透明度(0:完全透明~1:完全不透明));
 	void ShowOrig(int BlurName, float ALPHA);
 };
