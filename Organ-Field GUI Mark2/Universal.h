@@ -37,8 +37,6 @@
 
 using namespace std;
 
-#define MAX_int 2147483647
-
 #define disable 0  //禁用;
 #define click 1    //鼠标点击;
 #define hover 2    //鼠标划过;

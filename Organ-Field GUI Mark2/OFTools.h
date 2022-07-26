@@ -4,7 +4,7 @@
 typedef struct TaskManagerType {
 	string Processlist;				//系统进程列表;
 	LPCTSTR Target_strProcessName;	//要结束的目标进程名称;
-	BOOL ProcessKill_Result;		//结束进程的结果(进程是否被结束);
+	BOOL ProcessKill_Result = FALSE;		//结束进程的结果(进程是否被结束);
 }TaskManagerType;
 
 class OFTaskManager {

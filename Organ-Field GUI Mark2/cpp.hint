@@ -4,3 +4,4 @@
 #define NULL
 #define NULL ((void *)0)
 #define close
+#define INT_MAX

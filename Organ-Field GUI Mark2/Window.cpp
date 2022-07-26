@@ -11,7 +11,8 @@ void Window::WindowOnTop() { ::SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 100, 100, 
 void Window::Initialize_Window(int Width, int Height, int Flag) {
 	hWnd = ::initgraph(Width, Height, Flag);
 	setorigin(0, 0);
-	setbkcolor(RGB(241, 243, 245));
+	//setbkcolor(RGB(241, 243, 245));
+	setbkcolor(RGB(255, 255, 255));
 	cleardevice();
 	setaspectratio(1, 1);
 	::setbkmode(TRANSPARENT);
