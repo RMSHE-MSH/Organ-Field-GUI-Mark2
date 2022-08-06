@@ -35,6 +35,11 @@
 #include "stdio.h"
 #include "string.h"
 
+#include <Python.h>
+
+#include <io.h>
+#include <direct.h>
+
 using namespace std;
 
 #define disable 0  //½ûÓÃ;

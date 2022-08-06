@@ -36,7 +36,7 @@ int ToggleEvent2() { cout << "ToggleOpen-2" << endl; return 0; }
 int main() {
 	win.Initialize_Window(1000, 1000, EW_SHOWCONSOLE);
 	win.SetWindowTilte("Organ-Field GUI");
-	win.MoveWindow(10, 10);
+	win.MoveWindow(5, 5);
 
 	/*loadimage(NULL, _T("D:\\Organ-Field GUI2.png"), 800, 800);
 
@@ -71,73 +71,40 @@ int main() {
 
 	OFS.SetSliderLocation(0, 0);*/
 
-	/*for (float j = 0; j < 100000; j += 0.01) {
-		BeginBatchDraw();
+	//for (float i = -10; i < 10; i += 0.01) { OFEG.ImportNewFunction(0, 0, (1 + 1 * i) * cos(i), (1 + 1 * i) * sin(i)); }
+	//OFEG.ImportNewFunction(0, (1 + 1 * i) * sin(j / sin(i + 1)), (1 + 1 * i) * cos(j / tan(i + 1)));
+	//OFEG.ImportNewFunction(0, (sin(i) * i) * cos(i), (i)*sin(i));
 
-		cleardevice();
-		OFEG.CreateFunctionGraphBOX(0, 310 + 300 * sin(j), 310 + 300 * cos(j), 100 + abs(400 * sin(j)), 100 + abs(400 * cos(j)));
-		for (float i = -2 * sin(j) - 1; i < 3; i += 0.01) { OFEG.ImportNewFunction(0, 0, 4 * sin(i), pow(i, 3) / 2 * sin(j)); }
+	/*float k = 0.5;
+	for (float j = 0; j < 200; j += 0.001) {
+		OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
+		for (float i = -PI; i < PI; i += 0.001) {
+			OFEG.ImportNewFunction(0, sin(i), cos(i));
+			OFEG.Style.FunctionPointCustomRadius.push_back(k += 0.005);
+			OFEG.Style.FunctionPointCustomColor.push_back(HSVtoRGB(180 * (sin(i * 1.2) + 1), 0.5, 0.8));
+		}
+		OFEG.SSAARender(0, 4, 0);
 		OFEG.AutoVisualDraw(0, 0);
+	}
+	OFEG.IMGtoVIDEO(0);*/
 
-		EndBatchDraw();
-	}*/
+	/*OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
+	for (float i = -PI; i < PI; i += 0.001) {
+		OFEG.ImportNewFunction(0, i, sin(i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(255, 107, 129));
+		OFEG.ImportNewFunction(0, i, pow(i, 2)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(112, 161, 255));
+		OFEG.ImportNewFunction(0, i, pow(2, i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(123, 237, 159));
+	}
+	OFEG.SSAARender(0, 4, 0);
+	OFEG.AutoVisualDraw(0, 0);*/
 
-	int A = 6000;
-
-	Sleep(A);
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -3.14; i < 3.14; i += 0.00004) { OFEG.ImportNewFunction(0, 0, 2 * sin(i), pow(i, 2)); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -2; i < 2; i += 0.00004) { OFEG.ImportNewFunction(0, 0, 3 * sin(i), pow(i, 3)); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -10; i < 10; i += 0.00004) { OFEG.ImportNewFunction(0, 0, (1 + 1 * i) * cos(i), (1 + 1 * i) * sin(i)); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -10; i < 10; i += 0.00004) { OFEG.ImportNewFunction(0, 0, pow(tan(sin(i)), 3), pow(tan(cos(i)), 3)); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -10; i < 10; i += 0.00004) { OFEG.ImportNewFunction(0, 0, tan(sin(i)), tan(cos(i))); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -10; i < 10; i += 0.00004) { OFEG.ImportNewFunction(0, 0, 2 * (2 * cos(i) - cos(2 * i)), 2 * (2 * sin(i) - sin(2 * i))); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	Sleep(A); cleardevice();
-	OFEG.CreateFunctionGraphBOX(0, 10, 10, 300, 300);
-	for (float i = -3.14; i < 3.14; i += 0.008) { OFEG.ImportNewFunction(0, 0, 2 * sin(i), pow(i, 2)); }
-	OFEG.AutoVisualDraw(0, 0);
-
-	OFEG.CreateFunctionGraphBOX(1, 320, 10, 300, 300);
-	for (float i = -2; i < 2; i += 0.005) { OFEG.ImportNewFunction(1, 0, 3 * sin(i), pow(i, 3)); }
-	OFEG.AutoVisualDraw(1, 0);
-
-	OFEG.CreateFunctionGraphBOX(2, 630, 10, 300, 300);
-	for (float i = -10; i < 10; i += 0.005) { OFEG.ImportNewFunction(2, 0, 0.5 * (1 + 1 * i) * cos(i), 0.5 * (1 + 1 * i) * sin(i)); }
-	OFEG.AutoVisualDraw(2, 0);
-
-	OFEG.CreateFunctionGraphBOX(3, 10, 320, 300, 300);
-	for (float i = -10; i < 10; i += 0.008) { OFEG.ImportNewFunction(3, 0, pow(tan(sin(i)), 3), pow(tan(cos(i)), 3)); }
-	OFEG.AutoVisualDraw(3, 0);
-
-	OFEG.CreateFunctionGraphBOX(4, 320, 320, 300, 300);
-	for (float i = -10; i < 10; i += 0.008) { OFEG.ImportNewFunction(4, 0, tan(sin(i)), tan(cos(i))); }
-	OFEG.AutoVisualDraw(4, 0);
-
-	OFEG.CreateFunctionGraphBOX(0, 630, 320, 300, 300);
-	for (float i = -10; i < 10; i += 0.008) { OFEG.ImportNewFunction(0, 0, 2 * (2 * cos(i) - cos(2 * i)), 2 * (2 * sin(i) - sin(2 * i))); }
-	OFEG.AutoVisualDraw(0, 0);
+	/*OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
+	for (float i = -PI; i < PI; i += 0.0001) {
+		OFEG.ImportNewFunction(0, sin(i), cos(i));
+		OFEG.Style.FunctionPointCustomRadius.push_back((16 * (sin(i * 8) + 2)));
+		OFEG.Style.FunctionPointCustomColor.push_back(HSVtoRGB(180 * (sin(i / 2 * PI) + 1), 0.5, 0.8));
+	}
+	OFEG.SSAARender(0, 16, 0);
+	OFEG.AutoVisualDraw(0, 0);*/
 
 	/*while (1) {
 		OFB.CreateButton("Blur", 80, 10, 120, 60, normal, Blur);
@@ -152,5 +119,6 @@ int main() {
 
 		OFS.CreateSlider(0, 10, 360, 380, 30, normal);
 	}*/
+
 	system("pause");
 };

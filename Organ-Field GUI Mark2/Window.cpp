@@ -12,7 +12,7 @@ void Window::Initialize_Window(int Width, int Height, int Flag) {
 	hWnd = ::initgraph(Width, Height, Flag);
 	setorigin(0, 0);
 	//setbkcolor(RGB(241, 243, 245));
-	setbkcolor(RGB(255, 255, 255));
+	setbkcolor(RGB(30, 30, 30));
 	cleardevice();
 	setaspectratio(1, 1);
 	::setbkmode(TRANSPARENT);
