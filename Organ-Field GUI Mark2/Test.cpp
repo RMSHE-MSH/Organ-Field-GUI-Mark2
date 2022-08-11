@@ -88,23 +88,30 @@ int main() {
 	}
 	OFEG.IMGtoVIDEO(0);*/
 
-	/*OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -PI; i < PI; i += 0.001) {
-		OFEG.ImportNewFunction(0, i, sin(i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(255, 107, 129));
-		OFEG.ImportNewFunction(0, i, pow(i, 2)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(112, 161, 255));
-		OFEG.ImportNewFunction(0, i, pow(2, i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(123, 237, 159));
+	OFEG.Style.LineStyle.FunctionLineWidth = 2;
+	OFEG.Style.PointStyle.StaticFunctionPointRadius = 5;
+	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
+	OFEG.SetFunctionLine(0, 3, 0);
+	for (float i = -PI; i <= PI; i += 0.1) {
+		OFEG.ImportNewFunction(0, i, sin(i)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(255, 107, 129)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(255, 107, 129));
+		OFEG.ImportNewFunction(0, i, cos(i)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(112, 161, 255)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(HSVtoRGB(180 * (sin((i)*PI / 2) + 1), 0.5, 0.8));
+		//OFEG.ImportNewFunction(0, i, pow(i, 2)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(123, 237, 159)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(123, 237, 159));
+		//OFEG.ImportNewFunction(0, i, pow(2, i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(123, 237, 159));
 	}
 	OFEG.SSAARender(0, 4, 0);
-	OFEG.AutoVisualDraw(0, 0);*/
+	OFEG.AutoVisualDraw(0, 0);
 
-	/*OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	for (float i = -PI; i < PI; i += 0.0001) {
-		OFEG.ImportNewFunction(0, sin(i), cos(i));
-		OFEG.Style.FunctionPointCustomRadius.push_back((16 * (sin(i * 8) + 2)));
-		OFEG.Style.FunctionPointCustomColor.push_back(HSVtoRGB(180 * (sin(i / 2 * PI) + 1), 0.5, 0.8));
+	/*for (float j = 0; j < 30; j += 0.01) {
+		OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
+		for (float i = -PI; i < PI; i += 0.001) {
+			OFEG.ImportNewFunction(0, (cos(j) + sin(i * j / (sin(i) + 2)) + 1) * sin(i + j), (sin(j) + cos(i * j / (cos(i) + 2)) + 1) * cos(i + j));
+			OFEG.Style.FunctionPointCustomRadius.push_back((0.09 * (sin(i * 10) + 2)));
+			OFEG.Style.FunctionPointCustomColor.push_back(HSVtoRGB(180 * (sin((i) / (2 / (j + 1)) * PI) + 1), 0.5, 0.8));
+		}
+		OFEG.SSAARender(0, 2, 60);
+		OFEG.AutoVisualDraw(0, 1);
 	}
-	OFEG.SSAARender(0, 16, 0);
-	OFEG.AutoVisualDraw(0, 0);*/
+	OFEG.IMGtoVIDEO(0);*/
 
 	/*while (1) {
 		OFB.CreateButton("Blur", 80, 10, 120, 60, normal, Blur);
