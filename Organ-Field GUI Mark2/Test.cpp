@@ -88,15 +88,19 @@ int main() {
 	}
 	OFEG.IMGtoVIDEO(0);*/
 
-	OFEG.Style.LineStyle.FunctionLineWidth = 2;
-	OFEG.Style.PointStyle.StaticFunctionPointRadius = 5;
+	OFEG.Style.LineStyle.StaticLineColor = RGB(209, 52, 56);
+	OFEG.Style.LineStyle.FunctionLineWidth = 1;
+	OFEG.Style.PointStyle.StaticFunctionPointRadius = 2;
 	OFEG.CreateFunctionGraphBOX(0, 10, 10, 963, 940);
-	OFEG.SetFunctionLine(0, 3, 0);
-	for (float i = -PI; i <= PI; i += 0.1) {
-		OFEG.ImportNewFunction(0, i, sin(i)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(255, 107, 129)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(255, 107, 129));
-		OFEG.ImportNewFunction(0, i, cos(i)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(112, 161, 255)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(HSVtoRGB(180 * (sin((i)*PI / 2) + 1), 0.5, 0.8));
+	for (float i = 1; i <= 10; i += 0.01) {
+		OFEG.ImportNewFunction(0, i, i);
+		OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(255, 107, 129)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(255, 107, 129));
+		//OFEG.ImportNewFunction(0, i, sin(i));
+		//OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(112, 161, 255)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(112, 161, 255));
 		//OFEG.ImportNewFunction(0, i, pow(i, 2)); OFEG.Style.PointStyle.DynamicFunctionPointColor.push_back(RGB(123, 237, 159)); OFEG.Style.LineStyle.DynamicFunctionLineColor.push_back(RGB(123, 237, 159));
 		//OFEG.ImportNewFunction(0, i, pow(2, i)); OFEG.Style.FunctionPointCustomColor.push_back(RGB(123, 237, 159));
+
+		//HSVtoRGB(180 * (sin((i)*PI / 2) + 1), 0.5, 0.8);
 	}
 	OFEG.SSAARender(0, 4, 0);
 	OFEG.AutoVisualDraw(0, 0);

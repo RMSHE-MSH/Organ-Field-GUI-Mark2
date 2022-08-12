@@ -172,6 +172,35 @@ void OFEXPGraph::DrawFunctionLine(int BoxName, int lineNum, int StaggerNum) {
 	}
 }
 
+void OFEXPGraph::DrawFunctionBezier(int BoxName, int lineNum, int StaggerNum) {
+	if (lineNum == 0)lineNum = 1;	//lineNum不能为0;
+
+	if (Style.LineStyle.StaticLineColor != NULL) {//如果存在自定义'线'的静态颜色则优先使用静态颜色(相对于主题颜色),如果没有静态颜色则使用主题颜色;
+		setlinecolor(Style.LineStyle.StaticLineColor);
+	} else if (Style.ThemeStyle.DefaultTheme == lightTheme)setlinecolor(Style.ThemeStyle.LineColor_light); else setlinecolor(Style.ThemeStyle.LineColor_Dark);
+
+	setlinestyle(Style.LineStyle.LineType | PS_ENDCAP_ROUND, Style.LineStyle.FunctionLineWidth * SSAAR[BoxName].SSAAOverride);//设置线宽;
+
+	//由于描述一条三次方贝塞尔曲线需要 4 个点，后一条贝塞尔曲线的起点与前一条的终点相同，所以必须确保 (PointsNum - 1) % 3 == 0;
+	//我们无法凭空幻想点,因此只能通过引入点调整数,减少连接的点数来绘制曲线;
+	int AdjustmentNum = NULL; while (true) if ((int((EGFB[BoxName].PointsNum - StaggerNum) / lineNum) - AdjustmentNum - 1) % 3 != 0) { ++AdjustmentNum; } else { break; };
+
+	//开辟内存空间用于储存按条件筛选点的坐标;
+	POINT *SelectPointCache = new POINT[int((EGFB[BoxName].PointsNum - StaggerNum) / lineNum) - AdjustmentNum]{ NULL };
+
+	//转存离散点坐标;
+	int i = StaggerNum; int j = 0; while (1) {
+		if (j >= int((EGFB[BoxName].PointsNum - StaggerNum) / lineNum) - AdjustmentNum)break;//强制j == int((EGFB[BoxName].PointsNum - StaggerNum) / lineNum) - AdjustmentNum;
+
+		SelectPointCache[j] = { int(xTransformCache[i] * SSAAR[BoxName].SSAAOverride), int(yTransformCache[i] * SSAAR[BoxName].SSAAOverride) };
+		i += lineNum; ++j;
+	}
+
+	polybezier(SelectPointCache, j);//绘制塞尔曲线;
+
+	delete[]SelectPointCache;	//释放内存;
+}
+
 void OFEXPGraph::FreeCache(int BoxName) {
 	EGFB[BoxName].PointsNum = 0;
 	xSourceCache.clear(); ySourceCache.clear(); vector<double>().swap(xSourceCache); vector<double>().swap(ySourceCache);
@@ -359,10 +388,30 @@ void OFEXPGraph::DrawFunction(int BoxName) {
 		solidcircle((EGFB[BoxName].GravityCenter.x + EGFB[BoxName].absoOrigin.x) * SSAAR[BoxName].SSAAOverride, (EGFB[BoxName].GravityCenter.y + EGFB[BoxName].absoOrigin.y) * SSAAR[BoxName].SSAAOverride, Style.GraphBOXStyle.GravityCenterRadius * SSAAR[BoxName].SSAAOverride);
 	}
 
-	//绘制点之间的连线;
-	if (Style.GraphBOXStyle.ShowFunctionLine == 1)DrawFunctionLine(BoxName_DrawFunctionLine, lineNum_DrawFunctionLine, StaggerNum_DrawFunctionLine);
+	//ShowFunctionLine绘制函数离散点的两两连线;
+	if (Style.GraphBOXStyle.ShowFunctionLine == 1)DrawFunctionLine(BoxName, lineNum_DrawFunctionLine, StaggerNum_DrawFunctionLine);
+
+	//ShowFunctionLineBezier绘制函数离散点的贝塞尔曲线
+	if (Style.GraphBOXStyle.ShowFunctionBezier == 1) {
+		//当StaggerNum=0时默认绘制所有曲线;
+		if (StaggerNum_DrawFunctionBezier == 0) {
+			for (int i = 0; i < lineNum_DrawFunctionBezier; ++i) {
+				DrawFunctionBezier(BoxName, lineNum_DrawFunctionBezier, i);
+			}
+		} else {
+			//当StaggerNum!=0,发生偏移时只会绘制一条曲线;
+			DrawFunctionBezier(BoxName, lineNum_DrawFunctionBezier, StaggerNum_DrawFunctionBezier);
+		}
+	}
 
 	//ShowFunctionPoints;
+	if (Style.GraphBOXStyle.ShowFunctionPoints == 1)DrawFunctionPoints(BoxName);
+
+	if (SSAAR[BoxName].SSAARenderOpen == 1)GetGraphBoxIMG(BoxName);//保存渲染图导程序自身目录下的EXPGraphSSAAOutPut文件夹
+	EndBatchDraw();
+}
+
+void OFEXPGraph::DrawFunctionPoints(int BoxName) {
 	if (Style.PointStyle.StaticFunctionPointColor != NULL) {//如果存在自定义'点'的静态颜色则优先使用静态颜色(相对于主题颜色),如果没有静态颜色则使用主题颜色;
 		setfillcolor(Style.PointStyle.StaticFunctionPointColor);
 	} else if (Style.ThemeStyle.DefaultTheme == lightTheme)setfillcolor(Style.ThemeStyle.FunctionColor_light); else setfillcolor(Style.ThemeStyle.FunctionColor_Dark);
@@ -388,9 +437,6 @@ void OFEXPGraph::DrawFunction(int BoxName) {
 			solidcircle(xTransformCache[i] * SSAAR[BoxName].SSAAOverride, yTransformCache[i] * SSAAR[BoxName].SSAAOverride, Style.PointStyle.StaticFunctionPointRadius * SSAAR[BoxName].SSAAOverride);
 		}
 	}
-
-	if (SSAAR[BoxName].SSAARenderOpen == 1)GetGraphBoxIMG(BoxName);//保存渲染图导程序自身目录下的EXPGraphSSAAOutPut文件夹
-	EndBatchDraw();
 }
 
 void OFEXPGraph::CreateFunctionGraphBOX(int BoxName, int x, int y, int width, int height) {
@@ -400,9 +446,14 @@ void OFEXPGraph::CreateFunctionGraphBOX(int BoxName, int x, int y, int width, in
 
 void OFEXPGraph::SetFunctionLine(int BoxName, int lineNum, int StaggerNum) {
 	Style.GraphBOXStyle.ShowFunctionLine = 1;
-	BoxName_DrawFunctionLine = BoxName;
 	lineNum_DrawFunctionLine = lineNum;
 	StaggerNum_DrawFunctionLine = StaggerNum;
+}
+
+void OFEXPGraph::SetFunctionBezier(int BoxName, int lineNum, int StaggerNum) {
+	Style.GraphBOXStyle.ShowFunctionBezier = 1;
+	lineNum_DrawFunctionBezier = lineNum;
+	StaggerNum_DrawFunctionBezier = StaggerNum;
 }
 
 void OFEXPGraph::ImportNewFunction(int BoxName, double xValue, double yValue) {

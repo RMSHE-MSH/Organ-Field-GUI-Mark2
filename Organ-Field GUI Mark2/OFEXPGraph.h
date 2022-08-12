@@ -23,7 +23,10 @@ typedef struct DrawingStyle {
 		bool ShowBigGrid = 1;				//显示大栅格;
 		bool ShowSmallGrid = 1;				//显示小栅格;
 		bool ShowGravityCenter = 1;			//显示质心(重心)点;
+
+		bool ShowFunctionBezier = 0;		//显示函数离散点的贝塞尔曲线
 		bool ShowFunctionLine = 0;			//显示函数离散点的两两连线;
+		bool ShowFunctionPoints = 1;		//显示函数离散点;
 
 		short GravityCenterRadius = 6;		//重心显示半径;
 		short AxisValueTextHeight = 17;		//坐标轴数值字高;
@@ -117,10 +120,11 @@ private:
 
 	void DrawFunction(int BoxName);
 
+	void DrawFunctionPoints(int BoxName);
+
 	//绘制函数离散点的两两连线(指定图形盒名称,设置函数个数,设置偏移数);
-	int BoxName_DrawFunctionLine = NULL;
-	int lineNum_DrawFunctionLine = NULL;
-	int StaggerNum_DrawFunctionLine = 0;
+	int lineNum_DrawFunctionLine = 1;		//默认画线条数(函数个数);
+	int StaggerNum_DrawFunctionLine = 0;	//默认偏移数;
 	void DrawFunctionLine(int BoxName, int lineNum, int StaggerNum);
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	1.lineNum: 一般情况下画线的条数等于导入图形盒中的函数个数(当lineNum设置为1时则图形盒全局线条都统一为一种颜色);
@@ -129,13 +133,20 @@ private:
 	2.StaggerNum: 从绘制时的数组中观察,StaggerNum为两点连线时跳过的一组点(两个点)的个数,具体效果请自行观察(StaggerNum默认应为0);
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+	//绘制函数离散点的贝塞尔曲线(指定图形盒名称,设置函数个数,设置偏移数);
+	int lineNum_DrawFunctionBezier = 1;		//默认画线条数(函数个数);
+	int StaggerNum_DrawFunctionBezier = 0;	//默认偏移数;
+	void DrawFunctionBezier(int BoxName, int lineNum, int StaggerNum);
+
 	void FreeCache(int BoxName);
 
 public:
 	DrawingStyle Style;
 
 	void CreateFunctionGraphBOX(int BoxName, int x, int y, int width, int height);
-	void SetFunctionLine(int BoxName, int lineNum, int StaggerNum);					//绘制函数离散点的两两连线(指定图形盒名称,设置函数个数,设置偏移数);
+	void SetFunctionLine(int BoxName, int lineNum, int StaggerNum);//绘制函数离散点的两两连线(指定图形盒名称,设置函数个数,设置偏移数);
+	void SetFunctionBezier(int BoxName, int lineNum, int StaggerNum);//绘制函数离散点的贝塞尔曲线(指定图形盒名称,设置函数个数,设置偏移数);
+
 	void ImportNewFunction(int BoxName, double xValue, double yValue);
 
 	void SSAARender(int BoxName, const float Override, const short FPS);
