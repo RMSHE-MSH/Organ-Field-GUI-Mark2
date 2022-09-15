@@ -143,15 +143,26 @@ private:
 public:
 	DrawingStyle Style;
 
+	//创建函数图形盒(图形盒名称,图形盒坐标(x,y),图形盒大小(宽,高));
 	void CreateFunctionGraphBOX(int BoxName, int x, int y, int width, int height);
 	void SetFunctionLine(int BoxName, int lineNum, int StaggerNum);//绘制函数离散点的两两连线(指定图形盒名称,设置函数个数,设置偏移数);
 	void SetFunctionBezier(int BoxName, int lineNum, int StaggerNum);//绘制函数离散点的贝塞尔曲线(指定图形盒名称,设置函数个数,设置偏移数);
 
-	void ImportNewFunction(int BoxName, double xValue, double yValue);
+	//导入离散点坐标数值到图形盒(指定图形盒名称,x值,y值);
+	void ImportValue(int BoxName, double xValue, double yValue);
 
+	//使用超级采样抗锯齿渲染(指定图形盒名称,SSAA渲染放大倍率,渲染视频帧率);同时该函数也用于渲染高分辨率图像;
 	void SSAARender(int BoxName, const float Override, const short FPS);
+	/*--------------------------------------------------------------------------------------------------------------------------------------------------------
+	超级采样抗锯齿就是把当前分辨率成倍提高,再把画缩放到当前的显示器上。这样的做法实际上就是在显示尺寸不变的情况提高分辨率，让单个像素变得极小，这样就能够大幅减轻画面的锯齿感了;
 
+	SSAA渲染放大倍率(Override): 可以输入(0,18)之间的任意数值. 数值＜1意味着缩小分辨率渲染;数值 > 1意味着放大分辨率渲染;
+	渲染视频帧率(FPS): 当需要渲染视频时该参数应大于0;当只渲染图片时该参数应设为0 (0FPS就是静态图像);
+	--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+	//当一切准备完毕后,调用此函数图形绘制的所有计算将开始进行;
+	//进行自动图形绘制(指定图形盒名称, 图形盒变换模式(自适应缩放模式));
 	void AutoVisualDraw(int BoxName, bool TransformMode);
 
-	void IMGtoVIDEO(int BoxName);
+	void IMGtoVIDEO(int BoxName);//将渲染图合并为视频(指定图形盒名称);
 };

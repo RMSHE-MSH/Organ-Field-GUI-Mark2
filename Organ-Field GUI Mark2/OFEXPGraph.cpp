@@ -7,7 +7,7 @@ DoublePOINT OFEXPGraph::GravityCenterSolver(int BoxName) {
 	//当Style.FunctionPointCustomRadius(所有点的半径)不为空时;
 	if (!Style.PointStyle.DynamicFunctionPointRadius.empty()) {
 		//当所有点的体积不相同时,计算质心位置;
-		//注意在EXPGraph中所提到的点并不是质点,它有体积有密度有体积有质量,并且密度为常量;
+		//注意在EXPGraph中所提到的点并不是质点,它有体积有密度有质量,并且密度为常量;
 		//根据质心的求解公式:质心 = 系统关于零点的矩 / 系统总质量;
 		//但是我这里采用简化算法下式中DynamicFunctionPointRadius[i]原本应为点的质量,因为默认所有点的密度相同,所以我们这里只体现比例关系,直接使用面积代表质量能提高计算速度;
 
@@ -328,7 +328,7 @@ void OFEXPGraph::DrawFunction(int BoxName) {
 	setlinestyle(PS_SOLID | PS_ENDCAP_SQUARE, Style.GraphBOXStyle.GridLineWidth * SSAAR[BoxName].SSAAOverride);
 
 	//在没有人指定主题的条件下根据背景色设置默认主题(如果已有人指定主题则程序不会自动选择);
-	if (RGB(128, 128, 128) <= getbkcolor() && Style.ThemeStyle.DefaultTheme == NULL) Style.ThemeStyle.DefaultTheme = lightTheme; else Style.ThemeStyle.DefaultTheme = DarkTheme;
+	if (Style.ThemeStyle.DefaultTheme == NULL)if (RGB(128, 128, 128) <= getbkcolor()) Style.ThemeStyle.DefaultTheme = lightTheme; else Style.ThemeStyle.DefaultTheme = DarkTheme;
 
 	//ShowBackgroundColor
 	if (Style.GraphBOXStyle.ShowBackground == 1) {
@@ -456,7 +456,7 @@ void OFEXPGraph::SetFunctionBezier(int BoxName, int lineNum, int StaggerNum) {
 	StaggerNum_DrawFunctionBezier = StaggerNum;
 }
 
-void OFEXPGraph::ImportNewFunction(int BoxName, double xValue, double yValue) {
+void OFEXPGraph::ImportValue(int BoxName, double xValue, double yValue) {
 	xSourceCache.push_back(xValue); ySourceCache.push_back(-yValue); ++EGFB[BoxName].PointsNum;
 }
 
