@@ -130,11 +130,12 @@ int main() {
 		OFS.CreateSlider(0, 10, 360, 380, 30, normal);
 	}*/
 
-	//OFEG.Style.ThemeStyle.DefaultTheme = lightTheme;
+	OFEG.Style.ThemeStyle.DefaultTheme = lightTheme;
 	OFEG.Style.PointStyle.StaticFunctionPointRadius = 2;
 	OFEG.CreateFunctionGraphBOX(0, 10, 10, 900, 900);
 	for (float i = -10; i < 4; i += 0.001) {
-		OFEG.ImportValue(0, 3 * i, pow(0.5 * i, 3) + pow(i, 2));
+		//OFEG.ImportValue(0, 3 * i, pow(0.5 * i, 3) + pow(i, 2));
+		OFEG.ImportValue(0, 3 * i, pow(i + 0.5 * (1 - i), 8));
 	}
 	OFEG.SSAARender(0, 4, 0);
 	OFEG.AutoVisualDraw(0, 0);

@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="OFBlur.h" />
     <ClInclude Include="OFButton.h" />
+    <ClInclude Include="OFEditControl.h" />
     <ClInclude Include="OFEXPGraph.h" />
     <ClInclude Include="OFMessage.h" />
     <ClInclude Include="OFSlider.h" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="OFBlur.cpp" />
     <ClCompile Include="OFButton.cpp" />
+    <ClCompile Include="OFEditControl.cpp" />
     <ClCompile Include="OFEXPGraph.cpp" />
     <ClCompile Include="OFMessage.cpp" />
     <ClCompile Include="OFSlider.cpp" />
